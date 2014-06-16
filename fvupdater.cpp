@@ -299,7 +299,9 @@ void FvUpdater::startDownloadFeed(QUrl url)
  	request.setUrl(url);
 
 	m_reply = m_qnam.get(request);
-
+#ifdef FERVOR_IGNORE_SSL_ERRORS
+	m_reply->ignoreSslErrors();
+#endif
 	connect(m_reply, SIGNAL(readyRead()), this, SLOT(httpFeedReadyRead()));
 	connect(m_reply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(httpFeedUpdateDataReadProgress(qint64, qint64)));
 	connect(m_reply, SIGNAL(finished()), this, SLOT(httpFeedDownloadFinished()));
@@ -603,3 +605,4 @@ void FvUpdater::showInformationDialog(QString message, bool showEvenInSilentMode
 	dlInformationMsgBox.setInformativeText(message);
 	dlInformationMsgBox.exec();
 }
+
