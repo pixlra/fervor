@@ -160,6 +160,15 @@ FvVersionComparator::ComparatorResult FvVersionComparator::CompareVersions(std::
 		}
 	}
 
+	// check gentoo like versioning
+	partB = partsB.at(n-1);
+	if( TypeOfCharacter(partB) == kNumberType )	{
+	  intB = atoi(partB.c_str());
+	  if (intB == 9999) {
+	    return kAscending;
+	  }
+	}
+
 	// The 2 strings are identical
 	return kSame;
 }
