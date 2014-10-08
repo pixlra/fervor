@@ -14,6 +14,7 @@ FvUpdateWindow::FvUpdateWindow(QWidget *parent) :
 	m_ui->setupUi(this);
 
 	m_appIconScene = 0;
+	setWindowModality(Qt::ApplicationModal);
 
 	// Delete on close
 	setAttribute(Qt::WA_DeleteOnClose, true);

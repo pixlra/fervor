@@ -13,6 +13,7 @@ FvUpdateConfirmDialog::FvUpdateConfirmDialog(QWidget *parent) :
 
 	// Delete on close
 	setAttribute(Qt::WA_DeleteOnClose, true);
+	setWindowModality(Qt::ApplicationModal);
 
 	// Set the "close app, then reopen" string
 	QString closeReopenString = m_ui->downloadThisUpdateLabel->text().arg(QString::fromUtf8(FV_APP_NAME));
