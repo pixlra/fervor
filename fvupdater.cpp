@@ -152,6 +152,10 @@ void FvUpdater::updateConfirmationDialogWasClosed()
 	m_updateConfirmationDialog = 0;
 }
 
+void FvUpdater::SetDependencies(QString dep )
+{
+  m_Dependencies = dep;
+}
 
 void FvUpdater::SetFeedURL(QUrl feedURL)
 {
@@ -372,7 +376,7 @@ bool FvUpdater::xmlParseFeed()
 {
 	QString currentTag, currentQualifiedTag;
 
-	QString xmlTitle, xmlLink, xmlReleaseNotesLink, xmlPubDate, xmlEnclosureUrl,
+	QString xmlTitle, xmlLink, xmlReleaseNotesLink, xmlPubDate, xmlEnclosureUrl, xmlEnclosureDependencies,
 			xmlEnclosureVersion, xmlEnclosurePlatform, xmlEnclosureType;
 	unsigned long xmlEnclosureLength = 0;
 
@@ -407,6 +411,16 @@ bool FvUpdater::xmlParseFeed()
 					if (FvPlatform::CurrentlyRunningOnPlatform(attribs.value("fervor:platform").toString().trimmed())) {
 
 						xmlEnclosurePlatform = attribs.value("fervor:platform").toString().trimmed();
+
+						if (attribs.hasAttribute("fervor:dependencies")) {
+						  xmlEnclosureDependencies = attribs.value("fervor:dependencies").toString().trimmed();
+            } else {
+              xmlEnclosureDependencies = "";
+            }
+						if( xmlEnclosureDependencies != QString(m_Dependencies) )
+						{
+						  continue;
+						}
 
 						if (attribs.hasAttribute("url")) {
 							xmlEnclosureUrl = attribs.value("url").toString().trimmed();

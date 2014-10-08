@@ -21,6 +21,8 @@ public:
 	static FvUpdater* sharedUpdater();
 	static void drop();
 
+	void SetDependencies(QString dep );
+
 	// Set / get feed URL
 	void SetFeedURL(QUrl feedURL);
 	void SetFeedURL(QString feedURL);
@@ -101,6 +103,8 @@ private:
 	void showErrorDialog(QString message, bool showEvenInSilentMode = false);			// Show an error message
 	void showInformationDialog(QString message, bool showEvenInSilentMode = false);		// Show an informational message
 
+
+	QString m_Dependencies;         // Dependencies string
 
 	//
 	// HTTP feed fetcher infrastructure
