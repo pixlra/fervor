@@ -1,5 +1,9 @@
 #include "fvupdatewindow.h"
+#ifdef FERVOR_RELEASE_NOTES
 #include "ui_fvupdatewindow.h"
+#else
+#include "ui_fvupdatewindow_no_release_notes.h"
+#endif
 #include "fvupdater.h"
 #include "fvavailableupdate.h"
 #include <QApplication>
@@ -34,7 +38,9 @@ FvUpdateWindow::FvUpdateWindow(QWidget *parent) :
 
 FvUpdateWindow::~FvUpdateWindow()
 {
+#ifdef FERVOR_RELEASE_NOTES
 	m_ui->releaseNotesWebView->stop();
+#endif
 	delete m_ui;
 }
 
@@ -48,10 +54,10 @@ bool FvUpdateWindow::UpdateWindowWithCurrentProposedUpdate()
 	QString downloadString = m_ui->wouldYouLikeToDownloadLabel->text()
 			.arg(QString::fromUtf8(FV_APP_NAME), proposedUpdate->GetEnclosureVersion(), QString::fromUtf8(FV_APP_VERSION));
 	m_ui->wouldYouLikeToDownloadLabel->setText(downloadString);
-
+#ifdef FERVOR_RELEASE_NOTES
 	m_ui->releaseNotesWebView->stop();
 	m_ui->releaseNotesWebView->load(proposedUpdate->GetReleaseNotesLink());
-
+#endif
 	return true;
 }
 
